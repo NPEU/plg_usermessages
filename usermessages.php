@@ -39,8 +39,8 @@ class plgSystemUserMessages extends JPlugin
             // and the user shouldn't be able to save it without filling in the mandatory fields.
             // Note alias, gravatar and avatar are automatically generated if not found, so we can't
             // use those. So, checking for role and strapline as these are compulsory.
-            if (empty($user_profile->profile['role']) || empty($user_profile->profile['biography'])) {
-                JFactory::getApplication()->enqueueMessage(JText::_('PLG_USER_LOGINMESSAGES_STAFF_PROFILE_MESSAGE'), 'notice');
+            if (empty($user_profile->profile['role']) || empty(trim($user_profile->profile['biography']))) {
+                JFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_USERMESSAGES_STAFF_PROFILE_MESSAGE'), 'notice');
             }
 
         }
