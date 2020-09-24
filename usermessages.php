@@ -25,7 +25,7 @@ class plgSystemUserMessages extends JPlugin
     {
         // Default login success message:
         JFactory::getApplication()->enqueueMessage(JText::_('PLG_SYSTEM_USERMESSAGES_LOGGED_IN_MESSAGE'));
-        
+
         // Staff login messages:
         if (in_array(10, $options['user']->getAuthorisedGroups())) {
             // This user is in the staff group. Assumed to be a staff member.
@@ -45,13 +45,13 @@ class plgSystemUserMessages extends JPlugin
 
         }
     }
-    
+
     /**
 	 * Check for the logout cookie and display the message.
      * Note this might be a bit of a hack, this file:
      * plugins/system/logout/logout.php
      * sets a cookie onUserLogout called 'PlgSystemLogout'
-     * The value of this cookie appears to always be NULL unless this method has been run, and it 
+     * The value of this cookie appears to always be NULL unless this method has been run, and it
      * only appears to get run once, and it's value is then an empty string for that one request
      * only. Also note that because of the redirect it's not possible to use enqueueMessage inside
      * a different onUserLogout method in this plugin (at least I think that's what's going on).
@@ -62,6 +62,11 @@ class plgSystemUserMessages extends JPlugin
 	 */
      public function onAfterInitialise()
      {
+        $app = JFactory::getApplication();
+        if ($app->isAdmin()) {
+            return; // Don't run in admin
+        }
+
         $c = $app->input->cookie->get(JApplicationHelper::getHash('PlgSystemLogout'));
         if (!is_null($c))
         {
