@@ -63,7 +63,7 @@ class plgSystemUserMessages extends JPlugin
      public function onAfterInitialise()
      {
         $app = JFactory::getApplication();
-        if ($app->isAdmin()) {
+        if ($app->isClient('administrator')) {
             return; // Don't run in admin
         }
 
